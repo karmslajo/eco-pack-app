@@ -11,15 +11,16 @@ datasource db {
 }
 
 model Package {
-  id          Int        @id @default(autoincrement())
+  id          Int                 @id @default(autoincrement())
   name        String
   description String
   price       Float
   size        String
   capacity    Float
-  food        Food       @relation(fields: [foodId], references: [id])
+  category    Category[]
+  food        Food                @relation(fields: [foodId], references: [id])
   images      Image[]
-  materials   Material[]
+  materials   PackagingMaterial[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -27,22 +28,13 @@ model Package {
 }
 
 model Food {
-  id   Int    @id @default(autoincrement())
-  name String
+  id       Int      @id @default(autoincrement())
+  name     String
+  category Category
 
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at")
   Package   Package[]
-}
-
-model Material {
-  id   Int    @id @default(autoincrement())
-  name String
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-  Package   Package? @relation(fields: [packageId], references: [id])
-  packageId Int?
 }
 
 model Image {
@@ -54,4 +46,50 @@ model Image {
   updatedAt DateTime @updatedAt @map("updated_at")
   Package   Package? @relation(fields: [packageId], references: [id])
   packageId Int?
+}
+
+enum Category {
+  BabyFood       @map("BABYFOOD")
+  Bakery         @map("BAKERY")
+  Beverages      @map("BEVERAGES")
+  BreadsPastries @map("BREADSPASTRIES")
+  Condiment      @map("CONDIMENT")
+  Dairy          @map("DAIRY")
+  Dessert        @map("DESSERT")
+  DryGoods       @map("DRYGOODS")
+  Fruits         @map("FRUITS")
+  Meat           @map("MEAT")
+  Pasta          @map("PASTA")
+  Snacks         @map("SNACKS")
+  Seafood        @map("SEAFOOD")
+  StreetFoods    @map("STREETFOODS")
+  Vegetables     @map("VEGETABLES")
+
+  @@map("category")
+}
+
+enum PackagingMaterial {
+  Aluminium    @map("ALUMINIUM")
+  FoilBags     @map("FOILBAGS")
+  Cardboard    @map("CARDBOARD")
+  Carton       @map("CARTON")
+  Hardboard    @map("HARDBOARD")
+  Glass        @map("GLASS")
+  Ceramic      @map("CERAMIC")
+  Metal        @map("METAL")
+  Tin          @map("TIN")
+  Steel        @map("STEEL")
+  Paper        @map("PAPER")
+  Paperboard   @map("PAPERBOARD")
+  CardStock    @map("CARDSTOCK")
+  Plastic      @map("PLASTIC")
+  Polymer      @map("POLYMER")
+  Polyethylene @map("POLYETHYLENE")
+  Film         @map("FILM")
+  Textile      @map("TEXTILE")
+  Fabric       @map("FABRIC")
+  Leather      @map("LEATHER")
+  Wood         @map("WOOD")
+  Cork         @map("CORK")
+  Sustainable  @map("SUSTAINABLE")
 }
