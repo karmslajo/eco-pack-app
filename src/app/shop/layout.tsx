@@ -1,7 +1,7 @@
-export default function RootLayout({
-    children,
-  }: {
-    children: React.ReactNode
-  }) {
-    return <main>{children}</main>
-  }
+export default function ShopLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return <main className="p-16"  >{children}</main>;
+}

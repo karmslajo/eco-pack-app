@@ -12,7 +12,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="min-h-screen bg-stone-300 antialiased">
+      <body className="min-h-screen bg-slate-50 antialiased">
         <Navbar />
         <main> {children}</main>
       </body>

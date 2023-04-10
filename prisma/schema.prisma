@@ -16,7 +16,7 @@ model Package {
   description String
   price       Float
   size        String
-  capacity    Float
+  capacity    String
   category    Category[]
   food        Food                @relation(fields: [foodId], references: [id])
   images      Image[]
