@@ -1,8 +1,10 @@
-import { Card, Col, Row, Button, Text } from "@nextui-org/react";
-import { Category, Package, PackagingMaterial } from "@prisma/client";
+import { Card, Col, Row, Text } from "@nextui-org/react";
+import { Category, PackagingMaterial, Image } from "@prisma/client";
+import { useState, useEffect } from "react";
 
-interface Props {
+interface PackageProps {
   pckg: {
+    id: number;
     name: string;
     description: string;
     price: number;
@@ -13,55 +15,63 @@ interface Props {
   };
 }
 
-export const PackageCard = ({ pckg }: Props) => (
-  <Card css={{ w: "280px", h: "400px" }}>
-    <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
-      <Col>
-        <Text h1 color="black" size={18}>
-          {pckg.name}
-        </Text>
-      </Col>
-    </Card.Header>
-    <Card.Body css={{ p: 0 }}>
-      <Card.Image
-        src="https://nextui.org/images/card-example-6.jpeg"
-        width="100%"
-        height="100%"
-        objectFit="cover"
-        alt="Card example background"
-      />
-    </Card.Body>
-    <Card.Footer
-      isBlurred
-      css={{
-        position: "absolute",
-        bgBlur: "#ffffff66",
-        borderTop: "$borderWeights$light solid rgba(255, 255, 255, 0.2)",
-        bottom: 0,
-        zIndex: 1,
-      }}
-    >
-      <Row>
-        <Col>
-          <Text color="#000" size={12}>
-            {pckg.description}
-          </Text>
+export const PackageCard = ({ pckg }: PackageProps) => {
+  const [image, setImage] = useState<Image>();
+
+  useEffect(() => {
+    const fetchImage = async () => {
+      const res = await fetch(`/api/images/${pckg.id}`);
+      if (res.ok) {
+        const data = await res.json();
+        setImage(data);
+      }
+    };
+    fetchImage();
+  }, [pckg.id]);
+
+  return (
+    <Card css={{ w: "280px", h: "350px" }}>
+      <Card.Body css={{ p: 0 }}>
+        <Card.Image
+          src={`${image?.url}`}
+          width="100%"
+          height="100%"
+          objectFit="cover"
+          alt={`${image?.name}`}
+        />
+      </Card.Body>
+      <Card.Footer
+        isBlurred
+        css={{
+          position: "absolute",
+          bgBlur: "#ffffff66",
+          borderTop: "$borderWeights$light solid rgba(255, 255, 255, 0.2)",
+          bottom: 0,
+          zIndex: 1,
+        }}
+      >
+        <Row>
           <Col>
-            <Row>
-              <Col style={{ width: 700, marginTop: 10 }}>
-                <Text color="#000" size={15}>
-                  {`${pckg.category} | ${pckg.size}`}
-                </Text>
-              </Col>
-              <Row justify="flex-end">
-                <Text color="#000" size={24}>
-                  {pckg.price}
-                </Text>
+            <Text color="#000" size={15}>
+              {pckg.name}
+            </Text>
+            <Col>
+              <Row>
+                <Col style={{ width: 700, marginTop: 10 }}>
+                  <Text color="#000" size={12}>
+                    {pckg.category.map((cat) => `${cat} | `)}
+                  </Text>
+                </Col>
+                <Row justify="flex-end">
+                  <Text color="#000" size={24}>
+                    {pckg.price}
+                  </Text>
+                </Row>
               </Row>
-            </Row>
+            </Col>
           </Col>
-        </Col>
-      </Row>
-    </Card.Footer>
-  </Card>
-);
+        </Row>
+      </Card.Footer>
+    </Card>
+  );
+};
