@@ -17,6 +17,7 @@ interface PackageProps {
 
 export const PackageCard = ({ pckg }: PackageProps) => {
   const [image, setImage] = useState<Image>();
+  const [isLoading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchImage = async () => {
@@ -24,23 +25,28 @@ export const PackageCard = ({ pckg }: PackageProps) => {
       if (res.ok) {
         const data = await res.json();
         setImage(data);
+        setLoading(false);
       }
     };
     fetchImage();
   }, [pckg.id]);
 
-  if(!image) return <Loading/>
-
   return (
     <Card css={{ w: "280px", h: "400px" }}>
       <Card.Body css={{ p: 0 }}>
-        <Card.Image
-          src={`${image?.url}`}
-          width="100%"
-          height="100%"
-          objectFit="cover"
-          alt={`${image?.name}`}
-        />
+        {isLoading ? (
+          <Loading
+            type="gradient"
+            style={{marginTop: 50}}
+          />
+        ) : (
+          <Card.Image
+            src={`${image?.url}`}
+            width="100%"
+            height="100%"
+            objectFit="cover"
+          />
+        )}
       </Card.Body>
       <Card.Footer
         isBlurred
