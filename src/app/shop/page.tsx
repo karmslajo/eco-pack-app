@@ -1,8 +1,10 @@
 "use client";
-import { Image, Package } from "@prisma/client";
+import { Package } from "@prisma/client";
 import React, { useEffect, useState } from "react";
-import { PackageCard } from "../../components/packages/packageCard";
-import { Grid } from "@nextui-org/react";
+import { PackageCard } from "../../components/card/packageCard";
+import { Grid, Input } from "@nextui-org/react";
+import CategoryDropdown from "../../components/dropdown/categoryDropdown";
+import MaterialDropdown from "../../components/dropdown/materialDropdown";
 
 async function getData() {
   const res = await fetch("/api/packages");
@@ -25,27 +27,42 @@ function Shop() {
   }, []);
 
   return (
-    <div>
-      <Grid.Container gap={2} justify="center">
-        {packages.map((pckg) => (
-          <Grid key={pckg.id} xs={12} sm={4} lg={3}>
-            <PackageCard
-              key={pckg.id}
-              pckg={{
-                id: pckg.id,
-                name: pckg.name,
-                description: pckg.description,
-                price: pckg.price,
-                size: pckg.size,
-                capacity: pckg.capacity,
-                category: pckg.category,
-                materials: pckg.materials,
-              }}
-            />
+    <>
+      <div className="-mt-16">
+        <Grid.Container gap={4} justify="space-between">
+          <Grid xs={12} lg={6}>
+            <Input clearable placeholder="Search" type="search" width="100%" />
           </Grid>
-        ))}
-      </Grid.Container>
-    </div>
+          <Grid xs={6} lg={3}>
+            <CategoryDropdown />
+          </Grid>
+          <Grid xs={6} lg={3}>
+            <MaterialDropdown />
+          </Grid>
+        </Grid.Container>
+      </div>
+      <div>
+        <Grid.Container gap={2} justify="center">
+          {packages.map((pckg) => (
+            <Grid key={pckg.id} xs={12} sm={4} lg={3}>
+              <PackageCard
+                key={pckg.id}
+                pckg={{
+                  id: pckg.id,
+                  name: pckg.name,
+                  description: pckg.description,
+                  price: pckg.price,
+                  size: pckg.size,
+                  capacity: pckg.capacity,
+                  category: pckg.category,
+                  materials: pckg.materials,
+                }}
+              />
+            </Grid>
+          ))}
+        </Grid.Container>
+      </div>
+    </>
   );
 }
 

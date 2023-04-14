@@ -1,4 +1,4 @@
-import { Card, Col, Row, Text } from "@nextui-org/react";
+import { Card, Col, Loading, Row, Text } from "@nextui-org/react";
 import { Category, PackagingMaterial, Image } from "@prisma/client";
 import { useState, useEffect } from "react";
 
@@ -28,6 +28,8 @@ export const PackageCard = ({ pckg }: PackageProps) => {
     };
     fetchImage();
   }, [pckg.id]);
+
+  if(!image) return <Loading/>
 
   return (
     <Card css={{ w: "280px", h: "350px" }}>
