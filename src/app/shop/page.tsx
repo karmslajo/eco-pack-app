@@ -33,10 +33,10 @@ function Shop() {
           <Grid xs={12} lg={6}>
             <Input clearable placeholder="Search" type="search" width="100%" />
           </Grid>
-          <Grid xs={6} lg={3}>
+          <Grid xs={12} lg={3}>
             <CategoryDropdown />
           </Grid>
-          <Grid xs={6} lg={3}>
+          <Grid xs={12} lg={3}>
             <MaterialDropdown />
           </Grid>
         </Grid.Container>
