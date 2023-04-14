@@ -47,10 +47,11 @@ model Image {
   Package   Package  @relation(fields: [packageId], references: [id])
   packageId Int
 
-   @@unique([packageId])
+  @@unique([packageId])
 }
 
 enum Category {
+  All            @map("ALL")
   BabyFood       @map("BABYFOOD")
   Bakery         @map("BAKERY")
   Beverages      @map("BEVERAGES")
@@ -71,6 +72,7 @@ enum Category {
 }
 
 enum PackagingMaterial {
+  All          @map("ALL")
   Aluminium    @map("ALUMINIUM")
   FoilBags     @map("FOILBAGS")
   Cardboard    @map("CARDBOARD")
