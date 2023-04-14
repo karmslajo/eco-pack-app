@@ -9,10 +9,10 @@ function Navbar() {
       <div className="max-w-7xl mx-auto flex justify-center">
         <Link href="/">
           <Image
-            src="/eco-pack-logo.png"
-            alt="eco-pack-logo"
-            width={160}
-            height={100}
+            src="/ipack-logo.png"
+            alt="ipack-pack-logo"
+            width={80}
+            height={80}
             sizes="(max-width: 320px) 280px,
             (max-width: 640px) 600px,
             1280px"
