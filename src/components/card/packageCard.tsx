@@ -32,7 +32,7 @@ export const PackageCard = ({ pckg }: PackageProps) => {
   if(!image) return <Loading/>
 
   return (
-    <Card css={{ w: "280px", h: "350px" }}>
+    <Card css={{ w: "280px", h: "400px" }}>
       <Card.Body css={{ p: 0 }}>
         <Card.Image
           src={`${image?.url}`}
