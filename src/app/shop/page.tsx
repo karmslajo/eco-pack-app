@@ -3,10 +3,8 @@ import { Package } from "@prisma/client";
 import React, { useEffect, useMemo, useState } from "react";
 import { PackageCard } from "../../components/card/packageCard";
 import { Dropdown, Grid, Input, Loading, Text } from "@nextui-org/react";
-import CategoryDropdown from "../../components/dropdown/categoryDropdown";
 import { categories } from "../../types/enums";
 import { Selection } from "@react-types/shared";
-import MaterialDropdown from "../../components/dropdown/materialDropdown";
 
 async function getData() {
   const res = await fetch("/api/packages");
@@ -60,12 +58,9 @@ function Shop() {
             <Text color="gray">Search</Text>
           </Grid>
           <Grid xs={12} lg={3}>
-            <Text color="gray" style={{ marginLeft: 3 }}>
+            <Text color="gray" style={{ marginLeft: 15 }}>
               Category
             </Text>
-          </Grid>
-          <Grid xs={12} lg={3}>
-            <Text color="gray">Material</Text>
           </Grid>
         </Grid.Container>
       </div>
@@ -90,9 +85,6 @@ function Shop() {
                 ))}
               </Dropdown.Menu>
             </Dropdown>
-          </Grid>
-          <Grid xs={12} lg={3}>
-            <MaterialDropdown />
           </Grid>
         </Grid.Container>
       </div>
