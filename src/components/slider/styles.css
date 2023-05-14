@@ -1,0 +1,17 @@
+[class^="main-slide"],
+[class*=" main-slide"] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 500px;
+  max-height: 100vh;
+}
+
+[class^="prod-slide"],
+[class*=" prod-slide"] {
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  height: 300px;
+  max-height: 100vh;
+}
