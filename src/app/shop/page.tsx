@@ -1,8 +1,19 @@
 "use client";
-import { Package } from "@prisma/client";
+import { Category, Package, PackagingMaterial } from "@prisma/client";
 import React, { useEffect, useMemo, useState } from "react";
 import { PackageCard } from "../../components/card/packageCard";
-import { Dropdown, Grid, Input, Loading, Text } from "@nextui-org/react";
+import {
+  Dropdown,
+  Grid,
+  Input,
+  Loading,
+  Modal,
+  Text,
+  Radio,
+  Image,
+  Button,
+  Row,
+} from "@nextui-org/react";
 import { categories } from "../../types/enums";
 import { Selection } from "@react-types/shared";
 
@@ -15,11 +26,31 @@ async function getData() {
   return data;
 }
 
+interface PackageProps {
+  name: string;
+  id: number;
+}
+
 function Shop() {
   const [packages, setPackages] = useState<Package[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<Selection>(
     new Set(["All"])
   );
+
+  const [pckge, setPackage] = useState<PackageProps>({
+    name: "",
+    id: 0,
+  });
+
+  const [visible, setVisible] = React.useState(false);
+  const handler = (pckg: Package) => {
+    setPackage(pckg);
+    setVisible(true);
+  };
+
+  const closeHandler = () => {
+    setVisible(false);
+  };
 
   const selectedCategoryValue = useMemo(
     () => Array.from(selectedCategory),
@@ -94,7 +125,13 @@ function Shop() {
             <Loading />
           ) : filteredPackages.length != 0 ? (
             filteredPackages.map((pckg) => (
-              <Grid key={pckg.id} xs={12} sm={4} lg={3}>
+              <Grid
+                key={pckg.id}
+                xs={12}
+                sm={4}
+                lg={3}
+                onClick={() => handler(pckg)}
+              >
                 <PackageCard
                   key={pckg.id}
                   pckg={{
@@ -108,6 +145,61 @@ function Shop() {
                     materials: pckg.materials,
                   }}
                 />
+                <Modal
+                  closeButton
+                  aria-labelledby="modal-title"
+                  open={visible}
+                  onClose={closeHandler}
+                >
+                  <Modal.Header>
+                    <Text id="package-title" size={24}>
+                      {pckge!.name}
+                    </Text>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <Text id="package-size" size={15}>
+                      Select Color
+                    </Text>
+                    <Radio.Group
+                      orientation="horizontal"
+                      defaultValue="primary"
+                    >
+                      <Radio value="primary" color="primary">
+                        Black
+                      </Radio>
+                      <Radio value="secondary" color="secondary">
+                        White
+                      </Radio>
+                      <Radio value="success" color="success">
+                        Brown
+                      </Radio>
+                    </Radio.Group>
+                    <Text id="package-color" size={15}>
+                      Select Size
+                    </Text>
+                    <Radio.Group
+                      orientation="horizontal"
+                      defaultValue="primary"
+                    >
+                      <Radio value="primary" color="primary">
+                        Small
+                      </Radio>
+                      <Radio value="secondary" color="secondary">
+                        Medium
+                      </Radio>
+                      <Radio value="success" color="success">
+                        Large
+                      </Radio>
+                    </Radio.Group>
+                    <Row>
+                    <Text id="package-color" size={15}>
+                      Quantity
+                    </Text>
+                    <Input></Input>
+                    </Row>
+                    <Button>Place Order</Button>
+                  </Modal.Body>
+                </Modal>
               </Grid>
             ))
           ) : (
