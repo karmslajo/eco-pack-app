@@ -192,10 +192,10 @@ function Shop() {
                       </Radio>
                     </Radio.Group>
                     <Row>
-                    <Text id="package-color" size={15}>
+                    <Text id="package-color" size={18} style={{marginTop: 5}}>
                       Quantity
                     </Text>
-                    <Input></Input>
+                    <Input color="secondary"></Input>
                     </Row>
                     <Button>Place Order</Button>
                   </Modal.Body>
